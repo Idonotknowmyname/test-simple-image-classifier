@@ -24,3 +24,10 @@ yarn-error.log*
 
 # Python venv
 venv/**
+
+# Python egg
+*.egg-info
+
+# Python cache files and notebooks
+**.ipynb
+__pycache__
