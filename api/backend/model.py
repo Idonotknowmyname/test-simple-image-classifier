@@ -19,6 +19,10 @@ def init_model():
 def make_predictions(file):
     image = Image.open(io.BytesIO(file.read()))
 
+    # Convert image if png (remove extra channel)
+    if image.format == "PNG":
+        image = image.convert("RGB")
+
     inputs = PREPROCESSOR(images=image, return_tensors="pt")
 
     outputs = MODEL(**inputs)
