@@ -17,3 +17,7 @@ variable "gcr_host" {
 variable "docker_image_version" {
   type = string
 }
+
+variable "backend_host_url" {
+  type = string
+}

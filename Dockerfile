@@ -29,7 +29,6 @@ COPY app ./
 # Get URL of backend host for frontend axios requests
 ARG HOST_URL
 ENV REACT_APP_HOST_URL="${HOST_URL}"
-
 RUN npm run build
 
 # Serving environment
