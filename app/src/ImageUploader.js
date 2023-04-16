@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import PredictionTable from "./PredictionTable";
-import "./Uploader.css";
+import "./ImageUploader.css";
 
 function ImageUploader() {
   const [image, setImage] = useState("");
@@ -43,7 +43,7 @@ function ImageUploader() {
     }
 
     axios
-      .post("http://localhost:8080/predict", data, config)
+      .post("http://localhost:8000/predict", data, config)
       .then((response) => {
         setPrediction(response.data);
       })
