@@ -57,7 +57,7 @@ function ImageUploader() {
   return (
     <div className="container">
       <div className="file-upload">
-        <label htmlFor="file-upload-input">Choose File</label>
+        <label htmlFor="file-upload-input">Select Image</label>
         <input
           id="file-upload-input"
           type="file"
