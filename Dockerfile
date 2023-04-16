@@ -25,6 +25,11 @@ COPY app/package-lock.json ./
 RUN npm ci --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 COPY app ./
+
+# Get URL of backend host for frontend axios requests
+ARG HOST_URL
+ENV REACT_APP_HOST_URL="${HOST_URL}"
+
 RUN npm run build
 
 # Serving environment
@@ -33,4 +38,4 @@ COPY --from=build /app/build /app/static
 
 USER noroot
 
-ENTRYPOINT ["/bin/bash", "-c", "gunicorn backend.app:app --workers ${NWORKERS:-8} --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:${PORT:-8000}"]
+ENTRYPOINT ["/bin/bash", "-c", "gunicorn backend.app:app --workers ${NWORKERS:-2} --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:${PORT:-8080}"]

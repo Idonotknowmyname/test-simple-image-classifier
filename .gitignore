@@ -34,3 +34,5 @@ venv/**
 # Python cache files and notebooks
 **.ipynb
 __pycache__
+
+.terraform*

@@ -13,6 +13,8 @@ app = FastAPI()
 
 # Set up CORS
 origins = [
+    "http://localhost:3000",
+    "http://localhost:8080",
     "http://localhost",
 ]
 
@@ -45,4 +47,4 @@ if os.path.isdir("static"):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=os.environ.get("PORT", 8080))

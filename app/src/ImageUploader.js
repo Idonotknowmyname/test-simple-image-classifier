@@ -3,6 +3,8 @@ import axios from "axios";
 import PredictionTable from "./PredictionTable";
 import "./ImageUploader.css";
 
+const HOST_URL = process.env.REACT_APP_HOST_URL || "http://localhost:8080"
+
 function ImageUploader() {
   const [image, setImage] = useState("");
   const [imageFile, setImageFile] = useState("");
@@ -43,7 +45,7 @@ function ImageUploader() {
     }
 
     axios
-      .post("http://localhost:8000/predict", data, config)
+      .post(`${HOST_URL}/predict`, data, config)
       .then((response) => {
         setPrediction(response.data);
       })
