@@ -1,0 +1,58 @@
+steps:
+  - id: "Terraform init"
+    name: "hashicorp/terraform:1.4.5"
+    script: |
+      cd terraform && terraform init
+  - id: "Terraform plan"
+    name: "hashicorp/terraform:1.4.5"
+    script: |
+      cd terraform
+      ERR=$(terraform plan -out plan.out -no-color -var-file prod.tfvars 2>&1)
+      echo $? > /workspace/exit_code.txt
+      if [ $? -eq 0 ]
+      then
+        cat <<EOF > /workspace/message.txt
+      This PR will be making the following changes to the resources:
+      <details>
+      <summary>Terraform plan</summary>
+
+      \`\`\`
+      $(terraform show -no-color plan.out)
+      \`\`\`
+
+      </details>
+      EOF
+      else
+        cat <<EOF > /workspace/message.txt
+      Failed to run `terraform plan`:
+      <details>
+      <summary>Terraform error</summary>
+
+      \`\`\`
+      ${ERR}
+      \`\`\`
+
+      </details>
+      EOF
+      fi
+  - id: "Post plan to PR"
+    name: "ghcr.io/supportpal/github-gh-cli"
+    env:
+      - "REPO_NAME=$REPO_NAME"
+      - "PR_NUMBER=$_PR_NUMBER"
+    secretEnv: ["GH_PAT_TOKEN"]
+    script: |
+      echo $GH_PAT_TOKEN | gh auth login --with-token
+      echo Posting to /repos/Idonotknowmyname/$REPO_NAME/issues/$PR_NUMBER/comments
+      gh api \
+        --method POST \
+        -H "Accept: application/vnd.github+json" \
+        -H "X-GitHub-Api-Version: 2022-11-28" \
+        /repos/Idonotknowmyname/$REPO_NAME/issues/$PR_NUMBER/comments \
+        -F body=@message.txt
+      exit $(cat /workspace/exit_code.txt)
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/github-token/versions/latest
+      env: "GH_PAT_TOKEN"
