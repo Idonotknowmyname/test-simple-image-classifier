@@ -1,0 +1,9 @@
+steps:
+  - id: "Terraform init"
+    name: "hashicorp/terraform:1.4.5"
+    script: |
+      cd terraform && terraform init
+  - id: "Terraform plan"
+    name: "hashicorp/terraform:1.4.5"
+    script: |
+      cd terraform && terraform apply -auto-approve -var-file prod.tfvars
