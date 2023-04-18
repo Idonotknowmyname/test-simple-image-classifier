@@ -1,13 +1,12 @@
 import os
 import time
 
-from fastapi import FastAPI, UploadFile, File
-from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-
-from backend.schema import Response
 from backend.model import init_model, make_predictions
+from backend.schema import Response
+from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
