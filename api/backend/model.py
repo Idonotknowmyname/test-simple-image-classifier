@@ -1,13 +1,14 @@
 import io
 
-from transformers import AutoImageProcessor, AutoModelForImageClassification
 from PIL import Image
+from transformers import AutoImageProcessor, AutoModelForImageClassification
 
 MODEL_NAME = "google/mobilenet_v1_0.75_192"
 RETURN_TOP = 3
 
 MODEL = None
 PREPROCESSOR = None
+
 
 def init_model():
     global MODEL, PREPROCESSOR
@@ -31,7 +32,9 @@ def make_predictions(file):
     # model predicts one of the 1000 ImageNet classes
     # predicted_class_idx = logits.argmax(-1).item()
     vs, ids = logits.topk(RETURN_TOP)
-    preds = [{"classname": MODEL.config.id2label[idx], "confidence": val}
-                for idx, val in zip(ids[0].tolist(), vs[0].tolist())]
-    
+    preds = [
+        {"classname": MODEL.config.id2label[idx], "confidence": val}
+        for idx, val in zip(ids[0].tolist(), vs[0].tolist())
+    ]
+
     return preds
