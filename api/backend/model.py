@@ -4,7 +4,7 @@ from PIL import Image
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 
 MODEL_NAME = "google/mobilenet_v1_0.75_192"
-RETURN_TOP = 3
+RETURN_TOP = 4 
 
 MODEL = None
 PREPROCESSOR = None
