@@ -26,7 +26,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.on_event('startup')
+
+@app.on_event("startup")
 def init():
     init_model()
 
@@ -35,10 +36,7 @@ def init():
 def handle_predict(image: UploadFile = File(...)):
     start = time.time()
     preds = make_predictions(image.file)
-    resp = {
-        "predictiontime": time.time() - start,
-        "predictions": preds
-    }
+    resp = {"predictiontime": time.time() - start, "predictions": preds}
     return resp
 
 

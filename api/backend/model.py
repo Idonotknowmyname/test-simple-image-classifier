@@ -9,6 +9,7 @@ RETURN_TOP = 3
 MODEL = None
 PREPROCESSOR = None
 
+
 def init_model():
     global MODEL, PREPROCESSOR
     if MODEL is None:
